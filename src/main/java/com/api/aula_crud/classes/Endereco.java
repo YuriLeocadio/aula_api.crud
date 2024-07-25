@@ -1,4 +1,4 @@
-package com.api.classes;
+package com.api.aula_crud.classes;
 
 import lombok.Data;
 
