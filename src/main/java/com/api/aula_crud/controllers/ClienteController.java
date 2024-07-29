@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("clientes")
 public class ClienteController {
 
-    @GetMapping
+    /*@GetMapping
     public String getAllClientes() {
         Gson gson = new Gson();
 
@@ -82,5 +82,5 @@ public class ClienteController {
         }
         return "Cliente não encontrado";
     }
-
+*/
 }
