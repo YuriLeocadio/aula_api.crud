@@ -1,34 +1,24 @@
 package com.api.aula_crud.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import com.api.aula_crud.classes.Cliente;
-import com.google.gson.Gson;
-import java.util.UUID;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.api.aula_crud.service.ClienteService;
 
 @RestController
 @RequestMapping("clientes")
 public class ClienteController {
 
-    /*@GetMapping
-    public String getAllClientes() {
-        Gson gson = new Gson();
+    @Autowired
+    private ClienteService clienteService;
 
-        if (!Cliente.clientes.isEmpty()) {
-            String resposta = gson.toJson(Cliente.clientes);
-            return resposta;
-        } else {
-            return "Não há clientes cadastrados.";
-        }
+    @GetMapping
+    public ResponseEntity<List<CLiente>> getAll() {
+        return clienteService.getAll();
     }
 
-    @PostMapping
+    /*@PostMapping
     public String addCliente(@RequestBody Cliente novoCliente) {
         for (Cliente cliente : Cliente.clientes) {
             if (cliente.getCpf().equals(novoCliente.getCpf()) || 
