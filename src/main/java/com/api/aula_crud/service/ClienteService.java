@@ -15,4 +15,16 @@ public class ClienteService {
     public List<Cliente> getAll() {
         return clienteRepository.findAll();
     }
+
+    public Cliente getById(Long id) {
+        return clienteRepository.findById(id).orElse(null);
+    }
+
+    public Cliente addCliente(Cliente cliente) {
+        return clienteRepository.save(cliente);
+    }
+
+    public void delete(Long id) {
+        clienteRepository.deleteById(id);
+    }
 }
