@@ -13,11 +13,11 @@ public class Transacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "conta_origem_id", referencedColumnName = "id")
     private ContaBancaria contaOrigem;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "conta_destino_id", referencedColumnName = "id")
     private ContaBancaria contaDestino;
 
