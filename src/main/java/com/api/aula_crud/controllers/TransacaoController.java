@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.api.aula_crud.classes.Transacao;
 import com.api.aula_crud.service.TransacaoService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/transacoes")
@@ -13,13 +14,50 @@ public class TransacaoController {
     @Autowired
     private TransacaoService transacaoService;
 
-    /*@PostMapping("/transferencia")
-    public ResponseEntity<Transacao> realizarTransferencia() {
-        // Verificar saldo no service
-        // Realizar a transferência
-    }*/
+    @PostMapping("/transferencia")
+public ResponseEntity<?>realizarTransferencia(@RequestBody Transacao transacao) {
 
-    /*@GetMapping("/historico/{numeroConta}")
-        // Lógica para buscar histórico de transações
-        // Imprimir histórico de transações*/
+        if (!transacaoService.verificarContasExistem(transacao.getContaOrigem().getNumeroConta(), transacao.getContaDestino().getNumeroConta())) {
+            return ResponseEntity.badRequest().body("Conta de origem ou destino não encontrada.");
+        }
+
+        if (!transacaoService.verificarSaldoSuficiente(transacao.getContaOrigem().getNumeroConta(), transacao.getValor())) {
+            return ResponseEntity.badRequest().body("Saldo insuficiente.");
+        }
+
+        Transacao novaTransacao;
+        try {
+            novaTransacao = transacaoService.criarTransacao(
+                    transacao.getContaOrigem().getNumeroConta(),
+                    transacao.getContaDestino().getNumeroConta(),
+                    transacao.getValor(),
+                    transacao.getTipo()
+            );
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        return ResponseEntity.ok(novaTransacao);
     }
+
+    @GetMapping("/historico/{numeroConta}")
+    public ResponseEntity<?> getHistoricoTransacoes(@PathVariable String numeroConta) {
+
+        List<Transacao> transacoes = transacaoService.getExtrato(numeroConta);
+        if (transacoes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(transacoes);
+    }
+
+    @GetMapping("/saldo/{numeroConta}")
+    public ResponseEntity<?> verificarSaldo(@PathVariable String numeroConta) {
+        try {
+            double saldo = transacaoService.verificarSaldo(numeroConta);
+            return ResponseEntity.ok(saldo);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+}

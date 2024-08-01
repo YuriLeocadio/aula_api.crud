@@ -13,7 +13,7 @@ public class ContaBancariaService {
     private ContaBancariaRepository contaBancariaRepository;
 
     public List<ContaBancaria> getAll() {
-        return contaBancariaRepository.getAll();
+        return contaBancariaRepository.findAll();
     }
 
     public ContaBancaria getByNumeroConta(String numeroConta) {

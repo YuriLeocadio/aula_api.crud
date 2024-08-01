@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface ContaBancariaRepository extends JpaRepository<ContaBancaria, Long> {
     ContaBancaria findByNumeroConta(String numeroConta);
-    List<ContaBancaria> getAll();
 }

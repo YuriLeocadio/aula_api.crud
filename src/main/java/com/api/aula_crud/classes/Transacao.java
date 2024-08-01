@@ -21,6 +21,9 @@ public class Transacao {
     @JoinColumn(name = "conta_destino_id", referencedColumnName = "id")
     private ContaBancaria contaDestino;
 
+    @Column(nullable = false, name = "tipo")
+    private String tipo;
+
     @Column(nullable = false)
     private double valor;
 
