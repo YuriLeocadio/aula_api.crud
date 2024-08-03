@@ -24,17 +24,9 @@ public class TransacaoService {
         return transacaoRepository.save(transacao);
     }
 
-    public double verificarSaldo(String numeroConta){
-        ContaBancaria conta = contaBancariaService.getByNumeroConta(numeroConta);
-        if(conta != null){
-            return conta.getSaldo();
-        }
-        throw new IllegalArgumentException("Conta não encontrada");
+    public List<Transacao> getExtrato(String numeroConta){
+        return transacaoRepository.findByContaOrigemNumeroContaOrderByDataHoraAsc(numeroConta);
     }
-
-    /*public List<Transacao> getExtrato(String numeroConta){
-        return transacaoRepository.findTransacoesByContaOrderByDataHora(numeroConta);
-    }*/
 
     public boolean verificarContasExistem(String contaOrigem, String contaDestino) {
         ContaBancaria origem = contaBancariaService.getByNumeroConta(contaOrigem);

@@ -60,4 +60,14 @@ public class ContaBancariaController {
         contaBancariaService.deleteContaBancaria(conta.getId());
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/saldo/{numeroConta}")
+    public ResponseEntity<?> verificarSaldo(@PathVariable String numeroConta) {
+        try {
+            double saldo = contaBancariaService.verificarSaldo(numeroConta);
+            return ResponseEntity.ok(saldo);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

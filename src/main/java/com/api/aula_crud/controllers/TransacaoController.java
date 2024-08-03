@@ -40,7 +40,7 @@ public ResponseEntity<?>realizarTransferencia(@RequestBody Transacao transacao) 
         return ResponseEntity.ok(novaTransacao);
     }
 
-    /*@GetMapping("/historico/{numeroConta}")
+    @GetMapping("/historico/{numeroConta}")
     public ResponseEntity<?> getHistoricoTransacoes(@PathVariable String numeroConta) {
 
         List<Transacao> transacoes = transacaoService.getExtrato(numeroConta);
@@ -49,15 +49,5 @@ public ResponseEntity<?>realizarTransferencia(@RequestBody Transacao transacao) 
         }
 
         return ResponseEntity.ok(transacoes);
-    }*/
-
-    @GetMapping("/saldo/{numeroConta}")
-    public ResponseEntity<?> verificarSaldo(@PathVariable String numeroConta) {
-        try {
-            double saldo = transacaoService.verificarSaldo(numeroConta);
-            return ResponseEntity.ok(saldo);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
     }
 }

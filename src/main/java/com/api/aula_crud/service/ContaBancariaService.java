@@ -28,4 +28,11 @@ public class ContaBancariaService {
         contaBancariaRepository.deleteById(id);
     }
 
+    public double verificarSaldo(String numeroConta){
+        ContaBancaria conta = contaBancariaRepository.findByNumeroConta(numeroConta);
+        if(conta != null){
+            return conta.getSaldo();
+        }
+        throw new IllegalArgumentException("Conta não encontrada");
+    }
 }
