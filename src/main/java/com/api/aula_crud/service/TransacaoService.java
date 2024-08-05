@@ -25,18 +25,7 @@ public class TransacaoService {
     }
 
     public List<Transacao> getExtrato(String numeroConta){
-        return transacaoRepository.findByContaOrigemNumeroContaOrderByDataHoraAsc(numeroConta);
-    }
-
-    public boolean verificarContasExistem(String contaOrigem, String contaDestino) {
-        ContaBancaria origem = contaBancariaService.getByNumeroConta(contaOrigem);
-        ContaBancaria destino = contaBancariaService.getByNumeroConta(contaDestino);
-        return origem != null && destino != null;
-    }
-
-    public boolean verificarSaldoSuficiente(String contaOrigem, double valor) {
-        ContaBancaria origem = contaBancariaService.getByNumeroConta(contaOrigem);
-        return origem != null && origem.getSaldo() >= valor;
+        return transacaoRepository.findByContaOrigemNumeroContaOrderByDataHoraDesc(numeroConta);
     }
 
     public Transacao criarTransacao(String contaOrigem, String contaDestino, double valor, String tipo) {
@@ -45,6 +34,11 @@ public class TransacaoService {
         if (origem == null || destino == null) {
             throw new IllegalArgumentException("Conta de origem ou destino não encontrada.");
         }
+
+        if (!contaBancariaService.verificarSaldoSuficiente(contaOrigem, valor)) {
+            throw new IllegalArgumentException("Saldo insuficiente na conta de origem.");
+        }
+
         origem.setSaldo(origem.getSaldo() - valor);
         destino.setSaldo(destino.getSaldo() + valor);
         contaBancariaService.addContaBancaria(origem);

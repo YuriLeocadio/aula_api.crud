@@ -35,4 +35,9 @@ public class ContaBancariaService {
         }
         throw new IllegalArgumentException("Conta não encontrada");
     }
+
+    public boolean verificarSaldoSuficiente(String contaOrigem, double valor) {
+        ContaBancaria origem = getByNumeroConta(contaOrigem);
+        return origem != null && origem.getSaldo() >= valor;
+    }
 }

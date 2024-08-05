@@ -21,7 +21,7 @@ public class Cliente {
     @Column(nullable = false, unique = true, length = 11)
     private String cpf;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco endereco;
 

@@ -16,7 +16,7 @@ public class ContaBancaria {
     private String numeroConta;
 
     @OneToOne
-    @JoinColumn(name = "Cliente_id", referencedColumnName = "id")
+    @JoinColumn(name = "Cliente_id", referencedColumnName = "id", nullable = false)
     private Cliente cliente;
 
     @Column(nullable = false)

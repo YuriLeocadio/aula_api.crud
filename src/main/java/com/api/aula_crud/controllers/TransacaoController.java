@@ -1,5 +1,6 @@
 package com.api.aula_crud.controllers;
 
+import com.api.aula_crud.service.ContaBancariaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,31 +14,22 @@ public class TransacaoController {
 
     @Autowired
     private TransacaoService transacaoService;
+    @Autowired
+    private ContaBancariaService contaBancariaService;
 
     @PostMapping("/transferencia")
 public ResponseEntity<?>realizarTransferencia(@RequestBody Transacao transacao) {
-
-        if (!transacaoService.verificarContasExistem(transacao.getContaOrigem().getNumeroConta(), transacao.getContaDestino().getNumeroConta())) {
-            return ResponseEntity.badRequest().body("Conta de origem ou destino não encontrada.");
-        }
-
-        if (!transacaoService.verificarSaldoSuficiente(transacao.getContaOrigem().getNumeroConta(), transacao.getValor())) {
-            return ResponseEntity.badRequest().body("Saldo insuficiente.");
-        }
-
-        Transacao novaTransacao;
         try {
-            novaTransacao = transacaoService.criarTransacao(
+            Transacao novaTransacao = transacaoService.criarTransacao(
                     transacao.getContaOrigem().getNumeroConta(),
                     transacao.getContaDestino().getNumeroConta(),
                     transacao.getValor(),
                     transacao.getTipo()
             );
+            return ResponseEntity.ok(novaTransacao);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        return ResponseEntity.ok(novaTransacao);
     }
 
     @GetMapping("/historico/{numeroConta}")

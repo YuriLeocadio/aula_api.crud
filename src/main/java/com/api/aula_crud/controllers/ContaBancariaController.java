@@ -51,14 +51,14 @@ public class ContaBancariaController {
     }
 
     @DeleteMapping("/{numeroConta}")
-    public ResponseEntity<ContaBancaria> delete(@PathVariable String numeroConta) {
+    public ResponseEntity<?> delete(@PathVariable String numeroConta) {
         ContaBancaria conta = contaBancariaService.getByNumeroConta(numeroConta);
 
         if (conta == null) {
             return ResponseEntity.notFound().build();
         }
         contaBancariaService.deleteContaBancaria(conta.getId());
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Conta removida do sistema");
     }
 
     @GetMapping("/saldo/{numeroConta}")
