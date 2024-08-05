@@ -44,7 +44,6 @@ public class ContaBancariaController {
             return ResponseEntity.notFound().build();
         }
         contaExistente.setSaldo(conta.getSaldo());
-        contaExistente.setCliente(conta.getCliente());
 
         ContaBancaria contaSalva = contaBancariaService.addContaBancaria(contaExistente);
         return ResponseEntity.ok(contaSalva);
