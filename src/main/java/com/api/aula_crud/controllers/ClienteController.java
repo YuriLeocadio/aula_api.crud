@@ -56,14 +56,33 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<Cliente> delete(@PathVariable Long id) {
         Cliente cliente = clienteService.getById(id);
 
-        if (cliente == null){
+        if (cliente == null) {
             return ResponseEntity.notFound().build();
         }
-        clienteService.delete(id);
-        return ResponseEntity.ok("Cliente removido");
+        return ResponseEntity.ok(clienteService.delete(id));
+    }
 
+    @PutMapping("/ativar/{id}")
+    public ResponseEntity<Cliente> edit(@PathVariable Long id) {
+        Cliente cliente = clienteService.getById(id);
+        if (cliente == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(clienteService.ativar(id));
+    }
+
+    @GetMapping("/inativos")
+    public ResponseEntity<List<Cliente>> getAllInativos() {
+        List<Cliente> clientes = clienteService.getAllInativos();
+        return ResponseEntity.ok(clientes);
+    }
+
+    @GetMapping("/ativos")
+    public ResponseEntity<List<Cliente>> getAllAtivos() {
+        List<Cliente> clientes = clienteService.getAllAtivos();
+        return ResponseEntity.ok(clientes);
     }
 }

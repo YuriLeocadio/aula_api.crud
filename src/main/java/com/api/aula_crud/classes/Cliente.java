@@ -33,4 +33,7 @@ public class Cliente {
 
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
+
+    @Column(name = "cliente_ativo")
+    private boolean clienteAtivo = true;
 }

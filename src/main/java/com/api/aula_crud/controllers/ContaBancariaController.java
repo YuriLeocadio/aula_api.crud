@@ -49,15 +49,15 @@ public class ContaBancariaController {
         return ResponseEntity.ok(contaSalva);
     }
 
-    @DeleteMapping("/{numeroConta}")
-    public ResponseEntity<?> delete(@PathVariable String numeroConta) {
-        ContaBancaria conta = contaBancariaService.getByNumeroConta(numeroConta);
+    @DeleteMapping("/{numeroConta}/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String numeroConta, @PathVariable long id) {
+        ContaBancaria contaExistente = contaBancariaService.getByNumeroConta(numeroConta);
 
-        if (conta == null) {
+        if (contaExistente == null) {
             return ResponseEntity.notFound().build();
         }
-        contaBancariaService.deleteContaBancaria(conta.getId());
-        return ResponseEntity.ok("Conta removida do sistema");
+        contaBancariaService.deleteContaBancaria(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/saldo/{numeroConta}")

@@ -24,7 +24,23 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public void delete(Long id) {
-        clienteRepository.deleteById(id);
+    public Cliente delete(Long id) {
+        Cliente cliente = getById(id);
+        cliente.setClienteAtivo(false);
+        return clienteRepository.save(cliente);
     }
-}
+
+    public Cliente ativar(Long id){
+        Cliente cliente = getById(id);
+        cliente.setClienteAtivo(true);
+        return clienteRepository.save(cliente);
+    }
+
+    public List<Cliente> getAllAtivos() {
+        return clienteRepository.findByClienteAtivoTrue();
+    }
+
+    public List<Cliente> getAllInativos(){
+        return clienteRepository.findByClienteAtivoFalse();
+    }
+    }

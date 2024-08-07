@@ -24,8 +24,10 @@ public class ContaBancariaService {
         return contaBancariaRepository.save(contaBancaria);
     }
 
-    public void deleteContaBancaria(Long id) {
-        contaBancariaRepository.deleteById(id);
+    public ContaBancaria deleteContaBancaria(Long id) {
+        ContaBancaria conta = contaBancariaRepository.findById(id).get();
+        contaBancariaRepository.delete(conta);
+        return conta;
     }
 
     public double verificarSaldo(String numeroConta){
