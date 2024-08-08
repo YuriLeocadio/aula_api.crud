@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.api.aula_crud.classes.Endereco;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class EnderecoService {
@@ -31,9 +32,10 @@ public class EnderecoService {
         endereco.setCep(endereco.getCep().replace("-", ""));
 
         Gson gson = new Gson();
-        System.out.println("Endereco: "+gson.toJson(endereco));
+        System.out.println("Endereco: " + endereco.toString());
         return enderecoRepository.save(endereco);
     }
+
     public Endereco addEndereco(Endereco endereco){
         return enderecoRepository.save(endereco);
     }

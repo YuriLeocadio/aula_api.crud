@@ -1,5 +1,7 @@
 package com.api.aula_crud.controllers;
 
+import com.api.aula_crud.dto.ClienteDTO;
+import com.api.aula_crud.dto.ClienteUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -84,5 +86,22 @@ public class ClienteController {
     public ResponseEntity<List<Cliente>> getAllAtivos() {
         List<Cliente> clientes = clienteService.getAllAtivos();
         return ResponseEntity.ok(clientes);
+    }
+
+    @GetMapping("/nomes")
+    public ResponseEntity<List<ClienteDTO>> getClientesDTO(){
+        return ResponseEntity.ok(clienteService.getClientesDTO());
+    }
+
+    @PutMapping("/dto/{id}")
+    public ResponseEntity<ClienteUpdateDTO> updateDTO(@PathVariable Long id, @RequestBody ClienteUpdateDTO clienteNovo) {
+        Cliente clienteExistente = clienteService.getById(id);
+
+        if(clienteExistente == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        ClienteUpdateDTO clienteDTO = clienteService.updateDTO(clienteExistente, clienteNovo);
+        return ResponseEntity.ok(clienteDTO);
     }
 }

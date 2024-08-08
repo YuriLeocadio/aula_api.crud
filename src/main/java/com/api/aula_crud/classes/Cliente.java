@@ -36,4 +36,10 @@ public class Cliente {
 
     @Column(name = "cliente_ativo")
     private boolean clienteAtivo = true;
+
+    @Column(nullable = false, unique = true, length = 11)
+    private String login;
+
+    @Column(nullable = false)
+    private String senha;
 }
