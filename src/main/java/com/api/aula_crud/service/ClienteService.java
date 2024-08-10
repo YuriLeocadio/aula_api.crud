@@ -48,7 +48,7 @@ public class ClienteService {
         return clienteRepository.findByClienteAtivoFalse();
     }
 
-    public ClienteUpdateDTO updateDTO(Cliente clienteExistente, ClienteUpdateDTO clienteNovo){
+    /*public ClienteUpdateDTO updateDTO(Cliente clienteExistente, ClienteUpdateDTO clienteNovo){
         // Converter o que é DTO pra Cliente
 
         if (clienteNovo.getNome() != null){
@@ -87,5 +87,5 @@ public class ClienteService {
             clientesDTO.add(clienteDTO);
         }
         return clientesDTO;
-    }
+    }*/
     }

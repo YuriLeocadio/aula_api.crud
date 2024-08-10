@@ -9,6 +9,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     List<Cliente> findByClienteAtivoTrue();
     List<Cliente> findByClienteAtivoFalse();
 
-    @Query("SELECT new com.api.aula_crud.dto.ClienteDTO(c.id, c.nome) FROM Cliente c")
-    List<Cliente> getClientesDTO();
+    /*@Query("SELECT new com.api.aula_crud.dto.ClienteDTO(c.id, c.nome) FROM Cliente c")
+    List<Cliente> getClientesDTO();*/
 }

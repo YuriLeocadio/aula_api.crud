@@ -2,6 +2,10 @@ package com.api.aula_crud.controllers;
 
 import com.api.aula_crud.dto.ClienteDTO;
 import com.api.aula_crud.dto.ClienteUpdateDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,26 +14,30 @@ import com.api.aula_crud.service.ClienteService;
 import java.util.List;
 
 @RestController
-@RequestMapping("clientes")
+@RequestMapping(value = "/teste-open-api", produces = {"application/json"})
+@Tag(name = "open-api")
 public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
 
+    @Operation(summary = "Obter todos os clientes", method = "Get")
     @GetMapping
     public ResponseEntity<List<Cliente>> getAll() {
         List<Cliente> clientes = clienteService.getAll();
         return ResponseEntity.ok(clientes);
     }
 
-    @PostMapping
-    public ResponseEntity<Cliente> addCliente(@RequestBody Cliente cliente) {
+    @Operation(summary = "Adicionar novo cliente", method = "Post")
+    @PostMapping("/{id}")
+    public ResponseEntity<Cliente> addCliente(@Parameter(description = "Cliente a ser adicionado") @RequestBody Cliente cliente) {
         Cliente clienteSalvo = clienteService.addCliente(cliente);
         return ResponseEntity.ok(clienteSalvo);
     }
 
+    @Operation(summary = "Buscar cliente por ID", method = "GET")
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> getById(@PathVariable Long id) {
+    public ResponseEntity<Cliente> getById(@Parameter(description = "ID do cliente") @PathVariable Long id) {
         Cliente cliente = clienteService.getById(id);
 
         if (cliente != null){
@@ -88,7 +96,7 @@ public class ClienteController {
         return ResponseEntity.ok(clientes);
     }
 
-    @GetMapping("/nomes")
+    /*@GetMapping("/nomes")
     public ResponseEntity<List<ClienteDTO>> getClientesDTO(){
         return ResponseEntity.ok(clienteService.getClientesDTO());
     }
@@ -103,5 +111,5 @@ public class ClienteController {
 
         ClienteUpdateDTO clienteDTO = clienteService.updateDTO(clienteExistente, clienteNovo);
         return ResponseEntity.ok(clienteDTO);
-    }
+    }*/
 }
